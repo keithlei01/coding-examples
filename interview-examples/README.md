@@ -1,0 +1,44 @@
+# Meta Business Engineer — IC5 Interview Prep
+
+Practical coding questions tailored for **Meta Business Engineer** interviews: metrics, funnels, revenue, experiments, and data manipulation—not pure algorithms for their own sake.
+
+## How to use this repo
+
+1. Read `problem.md` without looking at the solution.
+2. Implement in JavaScript (or your interview language).
+3. Compare with `solution.js` and read `explanation.md` for trade-offs and follow-ups.
+4. Practice explaining **business impact** and **edge cases** out loud (common at IC5).
+
+## Structure
+
+| Level  | Focus | Questions |
+|--------|--------|-----------|
+| [warmup](./warmup/) | JS muscle memory (start here if rusty) | 10 |
+| [easy](./easy/) | Parsing, aggregation, basic KPIs | 5 |
+| [medium](./medium/) | Windows, cohorts, experiments, intervals | 5 |
+| [hard](./hard/) | Streams, attribution, scheduling, multi-step metrics | 5 |
+
+Each question folder contains:
+
+- `problem.md` — **start here** (prompt only)
+- `solution.js` — classic reference (check after your attempt)
+- `solution-modern.js` — modern JS style (warmup only)
+- `explanation.md` — approach, complexity, IC5 talking points
+
+Warmup includes pre-made `attempt.js` stubs in each folder (fill in the TODO, then run with Node).
+
+## What interviewers often probe (IC5)
+
+- Correctness on messy real-world input (empty days, ties, time zones mentioned verbally).
+- Time/space complexity when data grows (logs, streams).
+- How you’d productionize: validation, idempotency, monitoring.
+- Connecting code to **decisions** (ship feature? pause campaign?).
+
+## Suggested study order
+
+**Days 1–3:** [warmup](./warmup/) (all 10)  
+**Week 1:** All easy → medium 01–03  
+**Week 2:** Medium 04–05 → hard 01–03  
+**Week 3:** Hard 04–05 + timed mocks (45 min / 2 problems)
+
+Good luck.
