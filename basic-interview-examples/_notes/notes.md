@@ -17,22 +17,19 @@ Interview usefulness (for your prep)
  | reduce | ⭐⭐⭐ Very common | Sum, count frequencies, group/aggregate | 
  | map | ⭐⭐⭐ Very common | Transform output shape (not covered yet but same tier) | 
  | slice | ⭐⭐ Common | Top-k: sorted.slice(0, k) | 
- | for...of + Map | ⭐⭐⭐ Very common | Count occurrences, DAU buckets | 
  | splice | ⭐ Rare | In-place remove/insert — almost never in metrics problems | 
 
 Most interview code looks like:
+```javascript
 // filter — keep what matches
 const valid = lines.filter(line => parseLine(line) !== null);
 
 // reduce — sum or count
 const sum = nums.reduce((acc, n) => acc + n, 0);
 
-// or plain loop (totally fine, often clearer)
-const map = new Map();
-for (const item of items) {
-  map.set(item, (map.get(item) || 0) + 1);
-}
-
+// map - split
+const [name, age, city] = line.split(",").map((part) => part.trim());
+```
 
 reduce - fold array into one value
   - arr.reduce((sum, n) => sum + n, 0);
@@ -42,8 +39,7 @@ reduce - fold array into one value
   return counts;  
   }, {});
 
-
-[Not often used] splice - remove/add items in place and return the removed items
+splice [rarely used]  - remove/add items in place and return the removed items
 - arr.splice(start, deleteCount, ...itemsToInsert);
   - arr = ["a", "b", "c", "d"];
   - arr.splice(1, 2, "x", "y", "z");  // ["a", "d", "x", "y", "z"] and returns ["b", "c"]

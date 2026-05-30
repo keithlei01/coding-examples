@@ -1,11 +1,18 @@
-/**
- * Implement filterThreshold — see problem.md
- * Run: node attempt.js
- */
 
-function filterThreshold(records, min) {
-  // TODO: your code here
+function filterThreshold(rows, min) {
+  return rows.filter((row) => {
+    return row.value >= min;
+  });
+
+  // const result = [];
+  // for (const row of rows) {
+  //   if (row.value >= min) {
+  //     result.push(row);
+  //   }
+  // }
+  // return result;
 }
+
 
 // --- tests ---
 const result = filterThreshold(

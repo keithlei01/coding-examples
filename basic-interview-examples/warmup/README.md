@@ -25,7 +25,7 @@ Do **not** open the solution files until you have a working attempt.
 | [06-find-duplicates](./06-find-duplicates/) | `Set` |
 | [07-merge-sorted-arrays](./07-merge-sorted-arrays/) | Two pointers |
 | [08-cents-to-dollars](./08-cents-to-dollars/) | Money string |
-| [09-clamp](./09-clamp/) | Min / max bounds |
+| [09-sliding-window-sum](./09-sliding-window-sum/) | Fixed-size sliding window |
 | [10-unique-in-order](./10-unique-in-order/) | Dedupe in order |
 
 **Practice without hints:** this repo disables inline suggestions in [.vscode/settings.json](../.vscode/settings.json). Also turn off **Cursor Tab** (see below).

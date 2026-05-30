@@ -1,10 +1,18 @@
-/**
- * Implement findDuplicates — see problem.md
- * Run: node attempt.js
- */
 
 function findDuplicates(arr) {
-  // TODO: your code here
+  const seen = new Set();  // if in set before, keep
+  const keep = new Set();
+
+  arr = arr.filter((n) => {
+    if (seen.has(n) && !keep.has(n)) {
+      keep.add(n);
+      return true;
+    }
+    seen.add(n);
+    return false;
+  });
+
+  return arr;
 }
 
 // --- tests ---
