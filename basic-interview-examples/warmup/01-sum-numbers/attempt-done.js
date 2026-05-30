@@ -3,7 +3,13 @@
  * Run: node attempt.js
  */
 function sumNumbers(nums) {
-  // TODO: your code here
+  return nums.reduce((sum, n) => sum + n, 0);
+
+  // let sum = 0;
+  // for (const n of nums) {
+  //   sum += n;
+  // }
+  // return sum;
 }
 
 // --- tests (uncomment as you go) ---

@@ -1,10 +1,16 @@
-/**
- * Implement groupByKey — see problem.md
- * Run: node attempt.js
- */
 
-function groupByKey(records, key) {
-  // TODO: your code here
+function groupByKey(rows, key) {
+
+  const grouped = {};
+  for (const row of rows) {
+    const region = row[key];
+    if (!grouped[region]) {
+      grouped[region] = [];
+    }
+
+    grouped[region].push(row);
+  }
+  return grouped;
 }
 
 // --- tests ---

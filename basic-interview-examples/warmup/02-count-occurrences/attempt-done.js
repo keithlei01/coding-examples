@@ -1,10 +1,11 @@
-/**
- * Implement countOccurrences — see problem.md
- * Run: node attempt.js
- */
-function countOccurences(itesm) {
-  let map = {};
+
+function countOccurrences(items) {
+  const map = new Map();
   
+  for (const x of items) {
+    map.set(x, (map.get(x) || 0) + 1);
+  }
+  return map;
 }
 
 // --- tests ---
