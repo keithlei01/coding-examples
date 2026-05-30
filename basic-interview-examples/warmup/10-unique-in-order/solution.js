@@ -1,17 +1,14 @@
 /**
- * Classic: new array + indexOf to check "already added?"
+ * Classic: Set tracks first-seen values; filter keeps original order.
  */
 function uniqueInOrder(arr) {
-  const result = [];
+  const seen = new Set();
 
-  for (let i = 0; i < arr.length; i++) {
-    const value = arr[i];
-    if (result.indexOf(value) === -1) {
-      result.push(value);
-    }
-  }
-
-  return result;
+  return arr.filter((value) => {
+    if (seen.has(value)) return false;
+    seen.add(value);
+    return true;
+  });
 }
 
 module.exports = { uniqueInOrder };

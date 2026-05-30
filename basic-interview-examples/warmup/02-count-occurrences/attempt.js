@@ -2,9 +2,9 @@
  * Implement countOccurrences — see problem.md
  * Run: node attempt.js
  */
-
-function countOccurrences(items) {
-  // TODO: your code here
+function countOccurences(itesm) {
+  let map = {};
+  
 }
 
 // --- tests ---

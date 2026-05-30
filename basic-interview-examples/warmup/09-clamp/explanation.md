@@ -1,15 +1,22 @@
 # Explanation
 
-`Math.max(min, n)` floors at `min`; `Math.min(max, …)` caps at `max`.
+Bounds are **inclusive**. Equivalent forms: `Math.min(max, Math.max(min, n))` or explicit if/else checks.
 
-Readable alternative:
+## Constraints
 
-```javascript
-if (n < min) return min;
-if (n > max) return max;
-return n;
-```
+- Result never below `min` or above `max` (inclusive).
+- Assume `min <= max` (no swap or validation needed).
 
-**Time:** O(1)
+## Edge cases and how we handle them
 
-Used in coupon max discount and pacing logic in later exercises.
+| Case | Expected | Handling |
+|------|----------|----------|
+| Above max | Returns `max` | `n > max` branch |
+| Below min | Returns `min` | `n < min` branch |
+| In range | Returns `n` unchanged | Neither branch fires |
+| At boundary `n === min` or `n === max` | Unchanged | Inclusive — not clamped |
+| `min === max` | Always that value | Degenerate range |
+
+**Time:** O(1) · **Space:** O(1)
+
+Used in coupon caps and ad pacing logic in later problems.

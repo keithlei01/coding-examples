@@ -3,15 +3,8 @@
  * Run: node attempt.js
  */
 function sumNumbers(nums) {
-  // let sum = 0;
-  // for (i = 0; i < nums.length; i++) {
-  //   sum += nums[i];
-  // }
-  // return sum;
-
-  return nums.reduce((sum, i) => sum + i, 0);
+  // TODO: your code here
 }
-
 
 // --- tests (uncomment as you go) ---
 console.log("sumNumbers([10, 20, 5]) =>", sumNumbers([10, 20, 5])); // expected: 35

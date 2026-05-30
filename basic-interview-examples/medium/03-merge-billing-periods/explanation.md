@@ -1,25 +1,42 @@
-# Explanation — Merge Billing Periods
+# Explanation — Merge Overlapping Billing Periods
 
-## Classic pattern
+## Approach
 
-**Merge intervals**—one of the most common “medium” problems for business-facing engineers because contracts, campaigns, and subscriptions are all intervals.
+Classic **merge intervals** per advertiser:
 
-## Touching intervals
+1. Group periods by `advertiserId`.
+2. Sort by `start` ascending.
+3. Linear scan: merge if `next.start <= cur.end + 1` (touching counts as overlap).
+4. Return all merged intervals sorted by `advertiserId`, then `start`.
 
-`[1,5]` and `[6,10]` merge because `end + 1 >= start` (continuous coverage). Clarify with interviewer—some domains use strict overlap only.
+## Constraints
 
-## Steps
+- Up to 100_000 periods, 10_000 advertisers.
+- Merge when intervals **overlap or touch**: `end1 + 1 >= start2`.
+- Per-advertiser merge only (never merge across advertisers).
 
-1. Group by `advertiserId`.
-2. Sort by `start`.
-3. Linear scan merge.
+## Edge cases and how we handle them
+
+| Case | Expected | Handling |
+|------|----------|----------|
+| Empty input | `[]` | No groups |
+| Touching intervals `[1,5]` + `[6,10]` | One merged interval | `6 <= 5 + 1` → merge |
+| Non-overlapping gap | Separate intervals | No merge |
+| Nested intervals | Single merged span | Extend `end` to max |
+| Unsorted input | Correct merge | Sort by `start` first |
+| Different advertisers | Independent merges | Group by `advertiserId` |
+
+**Overlap rule (inclusive days):** intervals overlap if they share any day. Non-overlap requires `end_j < start_i`.
 
 ## Complexity
 
-- Time: O(n log n) from sorting per advertiser (worst case one advertiser → O(n log n)).
-- Space: O(n) output.
+O(n log n) from sorting per advertiser group.
 
-## IC5 business tie-in
+## IC5 discussion
 
-- Prevents **double billing** when ops renews early and systems create overlapping rows.
-- Pair with **proration** discussion when merging changes invoice line items.
+- **Double billing:** merged view prevents duplicate charges on overlapping contracts.
+- **Proration:** production may need revenue allocation inside merged spans, not just union.
+
+## Clarify with interviewer
+
+Some domains use strict overlap (`start2 <= end1`) without touching. This problem uses **touching merges**—state that explicitly.

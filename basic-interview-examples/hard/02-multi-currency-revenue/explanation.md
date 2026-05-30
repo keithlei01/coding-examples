@@ -6,13 +6,30 @@
 2. Binary search **last rate with date ≤ txn date** (as-of join—standard finance).
 3. Sum USD; track skipped for data quality.
 
+## Constraints
+
+- Up to 100_000 transactions, 10_000 FX rows.
+- Use **nearest prior or same-day** rate per currency.
+- No applicable rate → skip transaction, add `id` to `skipped`.
+- Amounts are non-negative decimal **strings**; dates are sortable ISO strings.
+
+## Edge cases and how we handle them
+
+| Case | Expected | Handling |
+|------|----------|----------|
+| No FX rate for currency/date | Skip txn | `lookupRate` returns null |
+| Same-day rate | Allowed | `date <= txn.date` includes equal |
+| Future rate only | Skip | Binary search finds nothing |
+| Invalid/negative amount | Skip | `parseAmount` returns null |
+| Empty inputs | `{ totalUsd: "0.00", byCurrency: [], skipped: [] }` | Zero totals |
+| Zero amount | Included | Valid non-negative |
+| `byCurrency` order | Sorted by currency asc | Explicit sort |
+
+**Rounding note:** `totalUsd` rounds the grand sum; per-currency `usdTotal` rounds incrementally—they may differ by a penny. State your policy in an interview.
+
 ## Cleaner production implementation
 
 Pre-sort transactions once; merge-sort walk with FX pointers per currency—O(n + m) without repeated binary search. Mention this optimization at IC5.
-
-## Simplification in reference solution
-
-`byCurrency.usdTotal` recomputes for clarity; in interview, accumulate in one pass.
 
 ## Business topics
 

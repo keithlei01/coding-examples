@@ -1,4 +1,8 @@
 function validateCoupon(cart, coupon) {
+  if (!coupon || typeof coupon.type !== "string") {
+    return { valid: false, discountCents: 0, reason: "unknown_coupon_type" };
+  }
+
   if (!cart?.items?.length) {
     return { valid: false, discountCents: 0, reason: "empty_cart" };
   }

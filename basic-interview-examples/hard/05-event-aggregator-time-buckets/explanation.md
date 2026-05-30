@@ -4,17 +4,31 @@
 
 In-memory **rollup** table keyed by `(metric, bucketStart)`—same idea as Prometheus histograms, Flink tumbling windows, or Meta-style minute-level spend cubes.
 
-## Query range
+## Constraints
 
-Sum buckets overlapping `[from, to]`:
+- Up to 1_000_000 records.
+- `bucketSeconds >= 1`.
+- Bucket: `floor(timestamp / bucketSeconds) * bucketSeconds`.
+- `query`: sum values for events with `timestamp` in `[from, to]` inclusive, **aligned to bucket boundaries**.
+- `topMetrics(k, from, to)`: top k by total; tie-break metric name ascending.
 
-- Bucket `[b, b+B-1]` overlaps iff `b <= to` and `b+B-1 >= from`.
+## Edge cases and how we handle them
 
-Iterate bucket starts stepping by `bucketSeconds`—O(number of buckets in range), not O(all events).
+| Case | Expected | Handling |
+|------|----------|----------|
+| Unknown metric on query | `0` | Missing map entry |
+| Empty range / no overlap | `0` | Loop finds no buckets |
+| Two events same bucket | Summed | `record` adds to bucket total |
+| Example `[0,59]` | 15 | Both events in bucket 0 |
+| `topMetrics` tie | Name ascending | `localeCompare` |
+| Zero net total metric | Omitted from top list | Filter `total !== 0` |
+| `k = 0` | `[]` | `slice(0, 0)` |
 
-## topMetrics
+**Query semantics:** The reference solution sums **whole bucket totals** when a bucket overlaps the range (Prometheus-style bucket granularity). Event-level filtering at partial bucket edges would require storing per-event data or sub-bucket indexes—mention this trade-off in an interview.
 
-Scan distinct metrics (not every event)—acceptable for moderate cardinality; production uses **sketch** or pre-aggregated leaderboard table.
+## Query range overlap
+
+Bucket `[b, b+B-1]` overlaps `[from, to]` iff `b <= to` and `b+B-1 >= from`.
 
 ## IC5 system design hooks
 
@@ -23,10 +37,6 @@ Scan distinct metrics (not every event)—acceptable for moderate cardinality; p
 | Retention | TTL evict buckets older than N days |
 | Late events | Allow retraction job or watermark |
 | Cardinality explosion | Cap metric keys, sample |
-
-## Class vs functions
-
-Interview may ask for `class` to show API design for a “small service” embedded in a larger system.
 
 ## Complexity
 

@@ -21,11 +21,12 @@ Practical coding questions tailored for **Meta Business Engineer** interviews: m
 Each question folder contains:
 
 - `problem.md` — **start here** (prompt only)
+- `attempt.js` — starter stub with edge-case tests (fill in TODO, run with Node)
 - `solution.js` — classic reference (check after your attempt)
 - `solution-modern.js` — modern JS style (warmup only)
-- `explanation.md` — approach, complexity, IC5 talking points
+- `explanation.md` — approach, constraints, edge cases, complexity, IC5 talking points
 
-Warmup includes pre-made `attempt.js` stubs in each folder (fill in the TODO, then run with Node).
+Every problem folder includes `attempt.js` with inline tests covering constraints and edge cases from `problem.md`.
 
 ## What interviewers often probe (IC5)
 

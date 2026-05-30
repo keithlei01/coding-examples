@@ -8,12 +8,7 @@ function parseCsvLine(line) {
   const city = parts[2].trim();
 
   const ageNumber = Number(ageRaw);
-  let age;
-  if (isNaN(ageNumber)) {
-    age = ageRaw;
-  } else {
-    age = ageNumber;
-  }
+  const age = ageRaw !== "" && Number.isFinite(ageNumber) ? ageNumber : ageRaw;
 
   return { name: name, age: age, city: city };
 }

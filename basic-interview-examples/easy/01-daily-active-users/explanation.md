@@ -6,17 +6,26 @@
 2. Use a `Set` per day for distinct `userId`.
 3. Sort days lexicographically (`YYYY-MM-DD` sorts correctly).
 
+## Constraints
+
+- `0 <= events.length <= 100_000`.
+- Multiple events per user per day count **once** for DAU.
+- Calendar day is **UTC**; `date` format `"YYYY-MM-DD"`.
+- Only days with at least one event appear in output (no zero-fill).
+
+## Edge cases and how we handle them
+
+| Case | Expected | Handling |
+|------|----------|----------|
+| Empty input | `[]` | No buckets → empty result |
+| Same user many times in one day | DAU = 1 | `Set` dedupes per day |
+| Same user on different days | Counted each day | Separate Set per date |
+| Missing `userId` | Not in spec | In production, filter or quarantine bad rows |
+| Invalid timestamp | Not in spec | Would produce invalid date bucket — validate at ingest in production |
+
 ## Why this fits Business Eng
 
 DAU is a core health metric. The “coding” is grouping + deduplication—the same pattern as SQL `COUNT(DISTINCT user_id) GROUP BY date`.
-
-## Edge cases
-
-| Case | Behavior |
-|------|----------|
-| Empty input | `[]` |
-| Same user many times in one day | Count once |
-| Missing `userId` | In production, filter or quarantine bad rows |
 
 ## Complexity
 
