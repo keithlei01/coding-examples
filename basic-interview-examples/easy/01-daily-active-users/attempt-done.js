@@ -1,13 +1,28 @@
-/**
- * Implement dailyActiveUsers — see problem.md
- * Run: node attempt.js
- */
+
 function dailyActiveUsers(events) {
-  // TODO: your code here
+
+  const dateToDauCountMap = new Map();
+
+  events.map((event) => {
+    const dateString = utcDateString(event.timestamp);
+    if (!dateToDauCountMap.has(dateString)) {
+      dateToDauCountMap.set(dateString, new Set());
+    }
+    const dauCount = dateToDauCountMap.get(dateString);
+    dauCount.add(event.userId);
+  });
+
+  const result = [];
+  for (const key of dateToDauCountMap.keys()) {
+    result.push({ date: key, dau: dateToDauCountMap.get(key).size });
+  }
+
+  return result.sort((a, b) => { return a.date < b.date ? -1 : 1 });
 }
 
 function utcDateString(unixSeconds) {
   // TODO: optional helper
+  return new Date(unixSeconds * 1000).toISOString().split('T')[0];
 }
 
 // --- tests ---

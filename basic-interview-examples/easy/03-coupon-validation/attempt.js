@@ -1,9 +1,7 @@
-/**
- * Implement validateCoupon — see problem.md
- * Run: node attempt.js
- */
+
 function validateCoupon(cart, coupon) {
-  // TODO: your code here
+
+  
 }
 
 const cart1 = { items: [{ sku: "X", priceCents: 6000, qty: 1 }], subtotalCents: 6000 };

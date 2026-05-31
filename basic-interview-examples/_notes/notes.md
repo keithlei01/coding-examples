@@ -27,22 +27,28 @@ const valid = lines.filter(line => parseLine(line) !== null);
 // reduce — sum or count
 const sum = nums.reduce((acc, n) => acc + n, 0);
 
+// map - transform map entries to objects: map(region, cents) => { region: region, revenue: dollars }
+const result = [...centsByRegion.entries()].map(([region, cents]) => ({
+    region,
+    revenue: roundDollars(cents / 100),
+  }));
+
 // map - split
 const [name, age, city] = line.split(",").map((part) => part.trim());
+
+// splice - arr.splice(1, 2, "x", "y", "z");
+// ["a", "b", "c", "d"] => // ["a", "d", "x", "y", "z"] and returns ["b", "c"]
+const removed = arr.splice(start, deleteCount, ...itemsToInsert);
 ```
 
-reduce - fold array into one value
+More examples
+- reduce - fold array into one value
   - arr.reduce((sum, n) => sum + n, 0);
   - arr.reduce((max, n) => (n > max? n : max), arr[0]);
   - items.reduce((counts, item) => {  
   counts[item] = (counts[item] || 0) + 1;  
   return counts;  
   }, {});
-
-splice [rarely used]  - remove/add items in place and return the removed items
-- arr.splice(start, deleteCount, ...itemsToInsert);
-  - arr = ["a", "b", "c", "d"];
-  - arr.splice(1, 2, "x", "y", "z");  // ["a", "d", "x", "y", "z"] and returns ["b", "c"]
 
 for 
 - for (const x in items) - mainly object keys and array indices (rarely)
