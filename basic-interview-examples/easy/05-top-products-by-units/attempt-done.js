@@ -1,10 +1,30 @@
-/**
- * Implement topKProductsByUnits — see problem.md
- * Run: node attempt.js
- */
+
 function topKProductsByUnits(sales, k) {
-  // TODO: your code here
+  const productMap = new Map();
+  for (const item of sales) {
+    if (!productMap.has(item.productId)) {
+      productMap.set(item.productId, { productId: item.productId, units: 0, revenueCents: 0 });
+    }
+    let temp = productMap.get(item.productId);
+    temp.units = temp.units + item.units;
+    temp.revenueCents = temp.revenueCents + item.revenueCents;
+    productMap.set(item.productId, temp);
+  }
+
+  const all = [...productMap.values()];
+  all.sort((a, b) => {
+    if (a.units == b.units) {
+      if (a.revenueCents == b.revenueCents) {
+        return a.productId.localeCompare(b.productId);
+      }
+      return b.revenueCents - a.revenueCents;
+    }
+    return a.units - b.units;
+  });
+  return all.slice(0, k);
 }
+
+
 
 const sales = [
   { productId: "A", units: 2, revenueCents: 100 },
