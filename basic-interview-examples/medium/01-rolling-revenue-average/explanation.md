@@ -1,43 +1,60 @@
 # Explanation — Rolling 7-Day Revenue Average
 
-## Approach
+## Interview framing
 
-1. Index revenue by date.
-2. For each output date, walk 6 days back on the calendar (not just previous rows).
-3. Missing days contribute 0—important for “true” calendar windows used in finance pacing.
+On CoderPad, Business Eng screens often **give date helpers** (or pre-aligned daily rows) so you spend time on:
+
+1. **What belongs in the window** (calendar days, sparse → 0)
+2. **Money** (`revenueCents`, divide by 7, then dollars)
+3. **Complexity** (O(n) with fixed window size 7)
+
+Date string formatting is production plumbing—not usually the signal.
+
+## Approach (what you implement)
+
+1. Sort rows by `date` (or assume sorted if interviewer says so).
+2. `Map` date → `revenueCents`.
+3. For each output date, loop `i = 0..6`: `addDays(date, -i)`, add `map.get(day) || 0`.
+4. `rollingAvgDollars = round2(sumCents / 7 / 100)`.
+
+```javascript
+for (let i = 0; i < 7; i++) {
+  sumCents += centsByDate.get(addDays(date, -i)) || 0;
+}
+```
 
 ## Constraints
 
-- Span up to 365 days of records.
-- All dates valid ISO dates, UTC.
-- For **each input date**, compute inclusive 7-day rolling average (that date + 6 prior calendar days).
-- Result in dollars, rounded to 2 decimal places.
+- Up to 365 rows; valid ISO UTC dates.
+- Inclusive window: output date + 6 prior **calendar** days (not “previous 6 rows”).
+- Missing calendar days in input → **0** revenue in the sum.
+- Dollars, 2 decimal places.
 
-## Edge cases and how we handle them
+## Edge cases
 
-| Case | Expected | Handling |
-|------|----------|----------|
-| Empty input | `[]` | No dates to process |
-| Sparse dates | Missing days = 0 revenue | `centsByDate.get(d) \|\| 0` for each calendar day |
-| First date in series | Partial window (days before data) | Those days contribute 0 |
-| Example Jan 1 & Jan 7 | Avg 1.00 and 2.00 | Walk 7 days; Jan 7 window sums 700 on Jan 1 and Jan 7 only |
-| Duplicate dates in input | Last value wins | `Map` overwrites on re-insert |
-| Rounding | 2 decimal dollars | `round2(sumCents / 7 / 100)` |
+| Case | Handling |
+|------|----------|
+| Empty input | `[]` |
+| Sparse dates | `get(d) \|\| 0` for each day in window |
+| First date in series | Days before range contribute 0 |
+| Duplicate dates | `Map` — last row wins |
+| Jan 1 & Jan 7 example | $1.00 and $2.00 |
 
 ## O(1) sliding window (IC5 bonus)
 
-If you iterate dates in order on a dense timeline, maintain a queue of 7 day values and subtract/add as the window slides—**O(1)** per day after sort.
+If you walk a **dense** day-by-day timeline in order, keep a 7-day queue and add/subtract as the window slides—same idea as warmup sliding-window-sum. Sparse **output-only-on-input-dates** usually keeps the 7-step loop per row (still O(n)).
 
 ## Business use
 
-- Smooths daily noise for **week-over-week** business reviews.
-- Ads teams use rolling spend caps vs daily spikes.
+- Smooths daily noise for reviews.
+- Ads pacing vs daily spend spikes.
 
-## Pitfalls to mention
+## Pitfalls to mention verbally
 
 - **Timezone:** fiscal day boundaries.
-- **Late-arriving data:** backfill changes historical rolling averages—versioned snapshots or recompute jobs.
+- **Backfill:** late data changes historical rollups—recompute or versioned snapshots.
 
 ## Complexity
 
-Current: O(n × 7) = O(n). Space O(n) for map.
+- Time: O(n × 7) = O(n)
+- Space: O(n) for the map

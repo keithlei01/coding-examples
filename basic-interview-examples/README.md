@@ -14,8 +14,8 @@ Practical coding questions tailored for **Meta Business Engineer** interviews: m
 | Level  | Focus | Questions |
 |--------|--------|-----------|
 | [warmup](./warmup/) | JS muscle memory (start here if rusty) | 10 |
-| [easy](./easy/) | Parsing, aggregation, basic KPIs | 5 |
-| [medium](./medium/) | Windows, cohorts, experiments, intervals | 5 |
+| [easy](./easy/) | Parsing, aggregation, basic KPIs, ads metrics | 7 |
+| [medium](./medium/) | Windows, cohorts, experiments, budgets, rate limits | 8 |
 | [hard](./hard/) | Streams, attribution, scheduling, multi-step metrics | 5 |
 
 Each question folder contains:
@@ -39,7 +39,7 @@ Every problem folder includes `attempt.js` with inline tests covering constraint
 
 **Days 1–3:** [warmup](./warmup/) (all 10)  
 **Week 1:** All easy → medium 01–03  
-**Week 2:** Medium 04–05 → hard 01–03  
+**Week 2:** Medium 04–08 → hard 01–03  
 **Week 3:** Hard 04–05 + timed mocks (45 min / 2 problems)
 
 Good luck.
