@@ -14,7 +14,7 @@ Practical coding questions tailored for **Meta Business Engineer** interviews: m
 | Level  | Focus | Questions |
 |--------|--------|-----------|
 | [warmup](./warmup/) | JS muscle memory (start here if rusty) | 10 |
-| [easy](./easy/) | Parsing, aggregation, basic KPIs, ads metrics | 7 |
+| [easy](./easy/) | Parsing, aggregation, basic KPIs, ads metrics | 10 |
 | [medium](./medium/) | Windows, cohorts, experiments, budgets, rate limits | 8 |
 | [hard](./hard/) | Streams, attribution, scheduling, multi-step metrics | 5 |
 

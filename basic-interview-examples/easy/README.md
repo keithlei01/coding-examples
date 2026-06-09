@@ -9,5 +9,12 @@
 | [05-top-products-by-units](./05-top-products-by-units/) | Top K catalog | Aggregation, sorting |
 | [06-ad-spend-by-campaign](./06-ad-spend-by-campaign/) | Campaign spend rollup | Map, cents, sort |
 | [07-click-through-rate-by-ad](./07-click-through-rate-by-ad/) | Ad CTR | Event counts, ratio |
+| [08-cpa-by-campaign](./08-cpa-by-campaign/) | Cost per acquisition | Mixed events, dual maps |
+| [09-reach-and-frequency](./09-reach-and-frequency/) | Reach & frequency | Set dedupe + ratio |
+| [10-roas-by-campaign](./10-roas-by-campaign/) | Return on ad spend | Dual sum, omit zero spend |
 
-**Target time:** 20–25 min each (implement + explain).
+**Target time:** 20–30 min each (08–10 slightly longer).
+
+## Ads metrics ladder (06–10)
+
+Spend → CTR → CPA → Reach/Frequency → ROAS

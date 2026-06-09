@@ -3,7 +3,33 @@
  * Run: node attempt.js
  */
 function ctrByAd(events) {
-  // TODO
+  const adImpressions = new Map();
+  const adClicks = new Map();
+
+  for (const { adId, eventType } of events) {
+    if (!adId || (eventType !== "impression" && eventType !== "click")) continue;
+
+    if (eventType === "impression") {
+      if (!adImpressions.has(adId)) {
+        adImpressions.set(adId, 0);
+      }
+      adImpressions.set(adId, adImpressions.get(adId) + 1);
+    } else if (eventType === "click") {
+      if (!adClicks.has(adId)) {
+        adClicks.set(adId, 0);
+      }
+      adClicks.set(adId, adClicks.get(adId) + 1);
+    }
+  }
+
+  const result = [...adImpressions.entries()].map(([adId, impressions]) => {
+    return { adId: adId, impressions: impressions, clicks: adClicks.get(adId) || 0, ctr: round4((adClicks.get(adId) || 0) / impressions) };
+  });
+
+  return result.sort((a, b) => {
+    if (b.ctr !== a.ctr) return b.ctr - a.ctr;
+    return a.adId.localeCompare(b.adId);
+  });
 }
 
 function round4(n) {
