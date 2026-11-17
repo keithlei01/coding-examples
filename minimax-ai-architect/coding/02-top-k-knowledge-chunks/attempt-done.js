@@ -26,10 +26,11 @@ function retrieveTopK(query, chunks, k) {
   }
 
   scored.sort((a, b) => {
-    b.score - a.score || a.id.localeCompare(b.id);
+    return b.score - a.score || a.id.localeCompare(b.id);
   });
   return scored.slice(0, k);
 }
+
 
 function check(label, actual, expected) {
   const ok = JSON.stringify(actual) === JSON.stringify(expected);
